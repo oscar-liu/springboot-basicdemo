@@ -37,7 +37,7 @@ public class TestController {
     @GetMapping("/getQrCode")
     @ResponseBody
     public Result getQrCode(@RequestParam(value = "name", defaultValue = "World") String name) throws IOException {
-        String url = "http://106.52.20.166/api/Login/GetQrCode";
+        String url = "";
         HashMap postData = new HashMap();
         postData.put("proxyIp", "");
         postData.put("proxyUserName", "");
