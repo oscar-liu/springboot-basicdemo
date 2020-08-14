@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.oscar.demo.mapper.WxUserMapper">
+  <resultMap id="BaseResultMap" type="com.oscar.demo.entity.WxUser">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="wxid" jdbcType="VARCHAR" property="wxid" />
+    <result column="nickname" jdbcType="VARCHAR" property="nickname" />
+    <result column="mobile" jdbcType="VARCHAR" property="mobile" />
+  </resultMap>
+  
+  <sql id="Base_Column_List">
+    id,
+    wxid,
+    nickname,
+    mobile
+  </sql>
+
+  <select id="selectById" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    SELECT  <include refid="Base_Column_List" />  FROM wx_user WHERE id = #{_parameter}
+  </select>
+
+  <delete id="deleteById" parameterType="java.lang.Integer">
+    DELETE FROM wx_user  WHERE id = #{_parameter}
+  </delete>
+
+  <insert id="insert" parameterType="com.oscar.demo.entity.WxUser">
+    INSERT INTO wx_user (
+    id,
+    wxid,
+    nickname,
+    mobile,
+    lastlogin_time)
+    VALUES (
+    #{id},
+    #{wxid},
+    #{nickname},
+    #{mobile},
+    now()
+    )
+  </insert>
+
+  <select id="selectListByObjCdt" parameterType="com.oscar.demo.entity.WxUser" resultMap="BaseResultMap">
+    SELECT <include refid="Base_Column_List"/> FROM wx_user
+    <where>
+      <if test="wxid !=null and wxid !=''"> AND nickname LIKE "%" #{nickname} "%"</if>
+    </where>
+    ORDER BY created_time DESC
+  </select>
+
+
+</mapper>
